@@ -20,7 +20,7 @@ public class Animal
     }
     public void BliFodtDyr()
     {
-        Debug.Log("BliFodt")
+        Debug.Log("BliFodt");
     }
     public void AvsluttDyreLiv()
     {
