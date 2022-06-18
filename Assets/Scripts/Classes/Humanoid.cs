@@ -9,61 +9,69 @@ public class Humanoid
     public int IntelligensHurtighet { get; set; }
     public int IntelligensGunstighet { get; set; }
     public int FormStyrke { get; set; }
-    public int FormUtholdenFysisk { get; set; }
+    public int FormUtholdenhetFysisk { get; set; }
     public int FormUtholdenhetMental { get; set; }
     public int Sosialt { get; set; }
     public int HelseUthviltsverdi { get; set; }
     public int HelseMetthetsverdi { get; set; }
     public int HelseSykdom { get; set; }
-    public bool Do {get; set;}
+    public bool Fallet {get; set;}
 
     //Methods
     public void Jakte()
     {
-        debug.Log("Hunt");
+        Debug.Log("Hunt");
     }
     public void Angripe()
     {
-        debug.Log("Attack");
+        Debug.Log("Attack");
     }
     public void Spise()
     {
-        debug.Log("eat");
+        Debug.Log("eat");
     }
     public void Hvile()
     {
-        debug.Log("rest");
+        Debug.Log("rest");
     }
     public void Sosialisere()
     {
-        debug.Log("Socialise");
+        Debug.Log("Socialise");
     }
     public void Prokreere()
     {
-        debug.Log("procreate");
+        Debug.Log("procreate");
     }
-    public void Do()
+    public void AvslutteLivet()
     {
-        debug.Log("die");
+        Debug.Log("die");
     }
     public void BliFodt()
     {
-        debug.Log("be born");
+        Debug.Log("be born");
     }
 
     //Constructors
     public Humanoid(int hurtighet, int intelligensHurtighet, int intelligensGunstighet, int formStyrke, int formUtholdenhetFysisk, int formUtholdenhetMental, int sosialt)
     {
+        //Kjører BliFodt metode
+        BliFodt();
+
         //Setter helse verdiene til 100 ved fodsel
-        Do = false; 
+        Fallet = false; 
         HelseUthviltsverdi = 100; 
         HelseMetthetsverdi = 100; 
         HelseSykdom = 100; 
 
-
-
+        //Setter egenskapene til inputverdiene
+        Hurtighet = hurtighet; 
+        IntelligensHurtighet = intelligensHurtighet;
+        IntelligensGunstighet = intelligensGunstighet;
+        FormStyrke = formStyrke;
+        FormUtholdenhetFysisk = formUtholdenhetFysisk;
+        FormUtholdenhetMental = formUtholdenhetMental;
+        Sosialt = sosialt; 
 
     }
-
 
 }
