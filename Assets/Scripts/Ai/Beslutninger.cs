@@ -22,21 +22,21 @@ public class Beslutninger : MonoBehaviour
         //Deklarerer virtuelle variabler
         float helseIndikator;
         float angripSjanseIntelligens;
-        float tvil = Random.Range(0, 101)*mathf.Sqrt(1-formStyrke/100);
+        float tvil = Random.Range(0, 101)*Mathf.Sqrt(1-formStyrke/100);
 
         //Setter verdier for de viruelle variablene
         helseIndikator = (helseUthviltverdi + helseSult + helseSykdom)/3;
-        if(helseUthviltverdi < 20 || helseSult < 20 || heleSykdom < 20)    
+        if(helseUthviltverdi < 20 || helseSult < 20 || helseSykdom < 20)    
         {
             helseIndikator = helseIndikator/2; 
         }
-        angripSjanseIntelligens = Random.Range(mathf.Floor(intelligensGunstighet*intelligensGunstighet/100), intelligensGunstighet);
+        angripSjanseIntelligens = Random.Range(Mathf.Floor(intelligensGunstighet*intelligensGunstighet/100), intelligensGunstighet);
 
         //Kjorer tester for aa teste hva som skjer
         if(helseIndikator > 80)
         {
             //Gunstig aa angripe
-            if(angripSjanseIntelligenss >= tvil)
+            if(angripSjanseIntelligens >= tvil)
             {
                 return true;
             }
@@ -89,6 +89,37 @@ public class Beslutninger : MonoBehaviour
         {
             //Helse saa lav at man automatisk velger aa flykte
             return false; 
+        }
+    }
+
+    public bool VelgerHumanoidSpise(int helseSult, int helseSykdom)
+    {
+        if(helseSult < 30)
+        {
+            return true; 
+        }
+        else if (helseSult < 50)
+        {
+            if(helseSykdom < 60)
+            {
+                return true; 
+            }
+            else
+            {
+                float chance = Random.Range(0, 101);
+                if(chance < 50)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            return false;
         }
     }
 
