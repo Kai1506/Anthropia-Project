@@ -3,16 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Obstacle
+  - Animal
+  - Humanoid
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Self
   - Water
   - UI
-  - 
-  - 
+  - Bear
+  - Obstacle
   - 
   - 
   - 
