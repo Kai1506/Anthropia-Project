@@ -12,6 +12,7 @@ public class Humanoid
     public int FormUtholdenhetFysisk { get; set; }
     public int FormUtholdenhetMental { get; set; }
     public int Sosialt { get; set; }
+    public int Attractiveness { get; set; }
     public int HelseUthviltsverdi { get; set; }
     public int HelseMetthetsverdi { get; set; }
     public int HelseSykdom { get; set; }
@@ -52,9 +53,9 @@ public class Humanoid
     }
 
     //Constructors
-    public Humanoid(int hurtighet, int intelligensHurtighet, int intelligensGunstighet, int formStyrke, int formUtholdenhetFysisk, int formUtholdenhetMental, int sosialt)
+    public Humanoid(int hurtighet, int intelligensHurtighet, int intelligensGunstighet, int formStyrke, int formUtholdenhetFysisk, int formUtholdenhetMental, int sosialt, int attractiveness)
     {
-        //Kjører BliFodt metode
+        //Kjoorer BliFodt metode
         BliFodt();
 
         //Setter helse verdiene til 100 ved fodsel
@@ -71,6 +72,7 @@ public class Humanoid
         FormUtholdenhetFysisk = formUtholdenhetFysisk;
         FormUtholdenhetMental = formUtholdenhetMental;
         Sosialt = sosialt; 
+        Attractiveness = attractiveness;
 
     }
 

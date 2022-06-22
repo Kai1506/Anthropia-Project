@@ -123,14 +123,28 @@ public class Beslutninger : MonoBehaviour
         }
     }
 
-    //Denne metoden boor gjoores simpesl og ferdig
-    public bool ChoosesToSocialise(bool otherPersonWants)
+    //Returnerer en bool som sier om denne personen har lyst til aa sosialisere eller ikke med en annen person
+    public bool ChoosesToSocialise(int sosialt)
     {
-        
+        int randint = Random.Range(0, 101);
+
+        if(sosialt > 70)
+        {
+            return true; 
+        }
+        else if(sosialt > 40)
+        {
+            if(randint > 50)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 
-    public bool ChoosesToSleep(bool helseUthviltverdi, helseSult)
+    public bool ChoosesToSleep(int helseUthviltverdi, int helseSult)
     {
         int randint = Random.Range(0, 101);
 
@@ -142,7 +156,7 @@ public class Beslutninger : MonoBehaviour
         {
             if(randint > 35)
             {
-                return true
+                return true;
             }
         }
 
@@ -150,7 +164,8 @@ public class Beslutninger : MonoBehaviour
     }
 
 
-    Public bool TriesToProcreate(bool otherPersonWants, bool attractiveness, int helseSykdom, int sosialt)
+    //Gir bool om denne personen vil ha sex med en annen person. For at det skal skje maa begge personer gi boolean = true
+    public bool TriesToProcreate(int attractiveness, int helseSykdom, int sosialt)
     {
         int randint = Random.Range(0, 101);
         int randint2 = Random.Range(0, 101);
@@ -164,11 +179,11 @@ public class Beslutninger : MonoBehaviour
         {
             if(randint2 > 50)
             {
-                attractiveness = true;
+                attractivenessCheck = true;
             }
         }
 
-        if(otherPersonWants == true && attractivenessCheck == true)
+        if(attractivenessCheck == true)
         {
             if(helseSykdom > 60)
             {
