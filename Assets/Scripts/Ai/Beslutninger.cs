@@ -123,4 +123,124 @@ public class Beslutninger : MonoBehaviour
         }
     }
 
+    //Denne metoden boor gjoores simpesl og ferdig
+    public bool ChoosesToSocialise(bool otherPersonWants)
+    {
+        
+    }
+
+
+    public bool ChoosesToSleep(bool helseUthviltverdi, helseSult)
+    {
+        int randint = Random.Range(0, 101);
+
+        if(helseUthviltverdi < 40 && helseSult > 60)
+        {
+            return true;
+        }
+        else if (helseUthviltverdi < 40)
+        {
+            if(randint > 35)
+            {
+                return true
+            }
+        }
+
+        return false;
+    }
+
+
+    Public bool TriesToProcreate(bool otherPersonWants, bool attractiveness, int helseSykdom, int sosialt)
+    {
+        int randint = Random.Range(0, 101);
+        int randint2 = Random.Range(0, 101);
+        bool attractivenessCheck = false; 
+
+        if(attractiveness > 70)
+        {
+            attractivenessCheck = true; 
+        }
+        else if(attractiveness > 40)
+        {
+            if(randint2 > 50)
+            {
+                attractiveness = true;
+            }
+        }
+
+        if(otherPersonWants == true && attractivenessCheck == true)
+        {
+            if(helseSykdom > 60)
+            {
+                if(sosialt > 60)
+                {
+                    if(randint > 30)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                else if(sosialt > 40)
+                {
+                    if(randint > 60)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    } 
+
+                }
+                else
+                {
+                    return false; 
+                }
+            }
+            else if(helseSykdom > 40)
+            {
+                if(sosialt > 60)
+                {
+                    if(randint > 50)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                else if(sosialt > 40)
+                {
+                    if(randint > 70)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    } 
+
+                }
+                else
+                {
+                    return false; 
+                }                
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        return false;
+    }
+    
+
 }
