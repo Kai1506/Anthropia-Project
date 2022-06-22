@@ -11,35 +11,45 @@ public class Senses : MonoBehaviour
 
     private Vector3 eyesightDirection;
 
-    private Bevegelse bevegelse;
+    private float warningTimer;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Check for a Wall.
+        //Check for raycast target
         bear = LayerMask.GetMask("Bear");
+
+        obstacle = LayerMask.GetMask("Obstacle");
     }
 
-    // Update is called once per frame
     void Update()
     {
-    }
+        warningTimer += Time.deltaTime;
 
-    void FixedUpdate()
-    {
+
+        //Eyesight
         eyesightDirection = transform.TransformDirection(Vector3.forward);
 
-        // Check if a Wall is hit.
-        if (Physics.Raycast(transform.position, eyesightDirection, 100, bear) )
+        // Check if raycast has spotted x
+        if (Physics.Raycast(transform.position, eyesightDirection, 100, bear) && warningTimer > 2f)
         {
             print("I see bear");
-            bevegelse.AnalyseSurroundings();
+            warningTimer = 0f;
         }
-        if(Physics.Raycast(transform.position, eyesightDirection, 100, obstacle))
+        if(Physics.Raycast(transform.position, eyesightDirection, 100, obstacle) && warningTimer > 2f)
         {
-            bevegelse.WalkTowardsX();
+            print("I see obstacle");
+            warningTimer = 0f;
         }
+    }
 
-        
+    //Hearing radius
+    private void OnTriggerEnter(Collider sound)
+    {
+        //Hearing
+        if(sound.tag == "Animal" || sound.tag == "Humanoid")
+        {
+            print("I hear something");
+        }
     }
 }

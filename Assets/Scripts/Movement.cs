@@ -2,16 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bevegelse : MonoBehaviour
+public class Movement : MonoBehaviour
 {
     //For testing:
     private bool idle = true;
 
     //Variables
-    private bool walking = false;
-
-    private bool lookAround = false;
-
     private int turnSpeed = 100;
 
     private int walkSpeed = 2;
@@ -70,39 +66,7 @@ public class Bevegelse : MonoBehaviour
                 nyPositionTimer = 0f;
             }
         }
-
-        //Looks around for obstacle
-        if(lookAround == true)
-        {
-            walkingAnim.Play("New State");
-            transform.Rotate(new Vector3(0,1,0) * Time.deltaTime, Space.Self);
-        }
-
-        //Walks towards target
-        if(lookAround == true)
-        {
-            walkingAnim.Play("WalkAnimStart");
-            transform.position += transform.forward * Time.deltaTime * walkSpeed;
-        }
     }
 
-    public void AnalyseSurroundings()
-    {
-        //Turn of idle animation
-        idle = false;
-
-        lookAround = true;
-
-        walking = false;
-    }
-
-    public void WalkTowardsX()
-    {
-        //Turn of idle animation
-        idle = false;
-
-        lookAround = false;
-
-        walking = true;
-    }
+    
 }
