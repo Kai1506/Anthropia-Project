@@ -4,47 +4,66 @@ using UnityEngine;
 
 public class Senses : MonoBehaviour
 {
-    //Senere: gjøre om vektoren til en funksjon som dekker et område foran
-    private LayerMask bear;
+    //Senere: gjore om vektoren til en funksjon som dekker et omrade foran
+    private static LayerMask bear;
 
-    private LayerMask obstacle;
+    private static LayerMask obstacle;
 
     private Vector3 eyesightDirection;
 
     private float warningTimer;
+
+
+    private bool foundTarget;
 
     // Start is called before the first frame update
     void Start()
     {
         //Check for raycast target
         bear = LayerMask.GetMask("Bear");
-
+        
         obstacle = LayerMask.GetMask("Obstacle");
     }
 
     void Update()
     {
-        warningTimer += Time.deltaTime;
-
-
-        //Eyesight
+        //Eyesight direction
         eyesightDirection = transform.TransformDirection(Vector3.forward);
 
-        // Check if raycast has spotted x
-        if (Physics.Raycast(transform.position, eyesightDirection, 100, bear) && warningTimer > 2f)
+        // If raycast has spotted x
+        if (Physics.Raycast(transform.position, eyesightDirection, 100,bear))
         {
-            print("I see bear");
-            warningTimer = 0f;
+            SeesSomething(bear);
         }
-        if(Physics.Raycast(transform.position, eyesightDirection, 100, obstacle) && warningTimer > 2f)
+        if(Physics.Raycast(transform.position, eyesightDirection, 100, obstacle))
         {
-            print("I see obstacle");
-            warningTimer = 0f;
+            SeesSomething(obstacle);
+        }
+    }
+
+    public void IsSleeping(bool asleep)
+    {
+        
+    }
+
+    //Spotted something and determined what it is
+    public static void SeesSomething(LayerMask target)
+    {
+        //Sees bear
+        if (target == bear)
+        {
+            //Tell brain to calculate bear-scenario
+        }
+
+        //Sees obstacle
+        if (target == obstacle)
+        {
+            //Tell brain to calculate obstacle-scenario
         }
     }
 
     //Hearing radius
-    private void OnTriggerEnter(Collider sound)
+    void OnTriggerEnter(Collider sound)
     {
         //Hearing
         if(sound.tag == "Animal" || sound.tag == "Humanoid")
@@ -52,4 +71,15 @@ public class Senses : MonoBehaviour
             print("I hear something");
         }
     }
+
+    void HasBeenHurt(bool hurt)
+    {
+
+    }
+
+    void HasSocialized(bool socialized)
+    {
+
+    }
+
 }
