@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class MovementInteraction : MonoBehaviour
 {
-    //For testing:
-    private bool idleMovement = true;
+    //testing:
+    private bool idle = true;
 
     //Variables
-    private bool moving = false;
+    private bool move = true;
+
+    private int moveSpeed = 2;
+
+    private Vector3 targetCoordinate;
+
+    private bool walkAnim = false;
 
     private static bool searchForTarget = false;
 
     private int turnTime = 100;
-
-    private int walkSpeed = 2;
-
-    private int runSpeed = 5;
 
     private Vector3 randomCoordinate;
 
@@ -49,46 +51,42 @@ public class MovementInteraction : MonoBehaviour
         //Test function
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            AnalyzeSurroundings(true);
+            Sleep();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            AnalyzeSurroundings(false);
+            WakeUp();
         }
 
-        //Idle animation for testing:
-        if (idleMovement == true)
+        //Walk towards something
+        if (move == true)
         {
-            //Idle walk
-            transform.position += transform.forward * Time.deltaTime * walkSpeed;
+            //Walk forwards
+            transform.position += transform.forward * Time.deltaTime * moveSpeed;
 
-            //Idle rotation
-            direction = Quaternion.LookRotation(randomCoordinate - transform.position);
+            //Rotate towards coordinate
+            direction = Quaternion.LookRotation(targetCoordinate - transform.position);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, direction, 100 * Time. deltaTime);
 
-            //Posisjon endring
-            if (nyPositionTimer > 8f && idleMovement == true)
+            //Idle Posisjon endring *
+            if (idle == true && nyPositionTimer > 8f)
             {
-                randomCoordinate = new Vector3(Random.Range(-45,46), 3, Random.Range(-45,46));
+                targetCoordinate = new Vector3(Random.Range(-45,46), 3, Random.Range(-45,46));
 
                 nyPositionTimer = 0f;
             }
-
-            moving = true;
-        }
-        else
-        {
-            moving = false;
         }
 
         //Walking Animation (yes or no)
-        if (moving == true)
+        if (move == true && walkAnim == false)
         {
             walkingAnim.Play("WalkAnimStart");
+            walkAnim = true;
         }
-        else
+        else if (move == false)
         {
             walkingAnim.Play("StandStill");
+            walkAnim = false;
         }
 
         //Look around until target found
@@ -101,42 +99,44 @@ public class MovementInteraction : MonoBehaviour
     //Eat Food
     public void Eat()
     {
-        
+
     }
 
     //Go to sleep
     public void Sleep()
     {
-        idleMovement = false;
+        //stop
+        move = false;
 
         //Lie down 
         transform.Rotate(-90.0f, 0.0f, 90.0f, Space.Self);
         transform.position = new Vector3(transform.position.x, transform.position.y-1, transform.position.z);
     }
 
-    //Go to sleep
+    //Wake up
     public void WakeUp()
     {
-
+        //Stand up
+        transform.Rotate(90.0f, 0.0f, -90.0f, Space.Self);
+        transform.position = new Vector3(transform.position.x, transform.position.y-1, transform.position.z);
     }
 
-    //Recieves a target to approach
-    public void WalkTowards()
+    //Recieves a target to approach, with speed 1-5
+    public void MoveTowards(bool move_, int moveSpeed_, Vector3 targetCoordinate_)
     {
+        move = move_;
 
-    }
+        moveSpeed = moveSpeed_;
+
+        targetCoordinate = targetCoordinate_;
+
+        idle = false;
+    }   
 
     //Look arounds
-    public void AnalyzeSurroundings(bool targetNotFound)
+    public void AnalyzeSurroundings(bool searchForTarget_)
     {
-        if (targetNotFound == true)
-        {
-            searchForTarget = true;
-        }
-        else 
-        {
-            searchForTarget = false;
-        }
+        searchForTarget = searchForTarget_;
     }
 
     //Attack target

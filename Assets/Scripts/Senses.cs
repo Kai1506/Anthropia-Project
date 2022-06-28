@@ -5,6 +5,8 @@ using UnityEngine;
 public class Senses : MonoBehaviour
 {
     //Senere: gjore om vektoren til en funksjon som dekker et omrade foran
+    private Core coreClass;
+
     private static LayerMask bear;
 
     private static LayerMask obstacle;
@@ -13,8 +15,21 @@ public class Senses : MonoBehaviour
 
     private float warningTimer;
 
-
     private bool foundTarget;
+
+    private string requestedTarget;
+
+    private bool sleeping;
+
+    private bool eating;
+
+    private bool socializing;
+
+    private bool procreating;
+
+    private bool attacking;
+
+    private int damageTaken = 30;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +38,9 @@ public class Senses : MonoBehaviour
         bear = LayerMask.GetMask("Bear");
         
         obstacle = LayerMask.GetMask("Obstacle");
+
+        //Finding core
+        coreClass = gameObject.GetComponent<Core>();
     }
 
     void Update()
@@ -31,7 +49,7 @@ public class Senses : MonoBehaviour
         eyesightDirection = transform.TransformDirection(Vector3.forward);
 
         // If raycast has spotted x
-        if (Physics.Raycast(transform.position, eyesightDirection, 100,bear))
+        if (Physics.Raycast(transform.position, eyesightDirection, 100, bear))
         {
             SeesSomething(bear);
         }
@@ -41,45 +59,106 @@ public class Senses : MonoBehaviour
         }
     }
 
-    public void IsSleeping(bool asleep)
+    //Sleeping
+    public void IsSleeping(bool sleeping_)
     {
-        
+        sleeping = sleeping_;
+    }
+    public bool GetIsSleeping() 
+    { 
+        return sleeping; 
     }
 
-    //Spotted something and determined what it is
-    public static void SeesSomething(LayerMask target)
+    //Eating
+    public void IsEating(bool eating_)
     {
-        //Sees bear
-        if (target == bear)
-        {
-            //Tell brain to calculate bear-scenario
-        }
+        eating = eating_;
+    }
+    public bool GetIsEating() 
+    { 
+        return eating; 
+    }
 
-        //Sees obstacle
-        if (target == obstacle)
-        {
-            //Tell brain to calculate obstacle-scenario
-        }
+    //Socializing
+    public void IsSocializing(bool socializing_)
+    {
+        socializing = socializing_;
+    }
+    public bool GetIsSocializing() 
+    { 
+        return socializing; 
+    }
+
+    //Procreating
+    public void IsProcreating(bool procreating_)
+    {
+        procreating = procreating_;
+    }
+    public bool GetIsProcreating() 
+    { 
+        return procreating; 
+    }
+
+    //Attacking
+    public void IsAttacking(bool attacking_)
+    {
+        attacking = attacking_;
+    }
+    public bool GetIsAttacking() 
+    { 
+        return attacking; 
     }
 
     //Hearing radius
-    void OnTriggerEnter(Collider sound)
+    public bool GetOnTriggerEnter(Collider sound)
     {
         //Hearing
         if(sound.tag == "Animal" || sound.tag == "Humanoid")
         {
-            print("I hear something");
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
-    void HasBeenHurt(bool hurt)
+    //Sees something and determines what it is
+    public string SeesSomething(LayerMask something)
     {
+        //Sees bear
+        return something.ToString();
+        
+        /*if (something == bear)
+        {
+            //Tell brain to calculate bear-scenario
+            return something.ToString();
+        }
 
+        //Sees obstacle
+        else if (something == obstacle)
+        {
+            //Tell brain to calculate obstacle-scenario
+            
+        }
+
+        if (something.ToString() == requestedTarget)
+        {
+            //Tell brain that target is spotted
+            return true; 
+        }*/
     }
 
-    void HasSocialized(bool socialized)
+    //Find target requested by core
+    public void SearchAfterTarget(string target)
     {
+        requestedTarget = target;
+    }
 
+    //Has taken damage, tells brain how much
+    public int GetDamageTakejn()
+    {
+        return damageTaken;
     }
 
 }
