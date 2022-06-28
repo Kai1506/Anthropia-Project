@@ -28,6 +28,13 @@ public class MovementInteraction : MonoBehaviour
 
     private float analyseTimer;
 
+    //core and sense class
+
+    Core coreClass; 
+
+    Senses sensesClass; 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +43,10 @@ public class MovementInteraction : MonoBehaviour
 
         //Start koordinat
         randomCoordinate = new Vector3(Random.Range(-45,46), 3, Random.Range(-45,46));
+
+        //Finner Core og Senses
+        coreClass = gameObject.GetComponent<Core>();
+        sensesClass = gameObject.GetComponent<Senses>();
     }
 
     // Update is called once per frame
@@ -96,6 +107,23 @@ public class MovementInteraction : MonoBehaviour
         {
             transform.RotateAround(transform.position, Vector3.up, 359 * Time.deltaTime / turnTime);
         }
+
+        //Hvis avgjørelsen å sove blir tatt, velger den å sove
+
+        /*
+        if(sensesClass.GetIsSleeping() == true && coreClass.GetFirsTimeSleeping() == true)
+        {
+            Sleep();
+            coreCore.SetFirsTimeSleeping(false); 
+            coreCore.SetFirsTimeAwake(true); 
+        }
+        else if (sensesClass.GetIsSleeping() == false && coreCore.GetFirsTimeAwake() == true)
+        {
+            WakeUp();
+            coreCore.SetFirsTimeAwake(false); 
+            coreCore.SetFirsTimeSleeping(true); 
+        }
+        */
     }
 
     //Eat Food
@@ -107,6 +135,7 @@ public class MovementInteraction : MonoBehaviour
     //Go to sleep
     public void Sleep()
     {
+
         idleMovement = false;
 
         //Lie down 
@@ -117,6 +146,7 @@ public class MovementInteraction : MonoBehaviour
     //Go to sleep
     public void WakeUp()
     {
+        
 
     }
 

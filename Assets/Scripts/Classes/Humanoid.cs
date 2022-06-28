@@ -16,6 +16,7 @@ public class Humanoid
     public int HelseUthviltsverdi { get; set; }
     public int HelseMetthetsverdi { get; set; }
     public int HelseSykdom { get; set; }
+    public int Id { get; set; }
     public bool Fallet {get; set;}
 
     //Methods
@@ -53,7 +54,7 @@ public class Humanoid
     }
 
     //Constructors
-    public Humanoid(int hurtighet, int intelligensHurtighet, int intelligensGunstighet, int formStyrke, int formUtholdenhetFysisk, int formUtholdenhetMental, int sosialt, int attractiveness)
+    public Humanoid(int hurtighet, int intelligensHurtighet, int intelligensGunstighet, int formStyrke, int formUtholdenhetFysisk, int formUtholdenhetMental, int sosialt, int attractiveness, int id)
     {
         //Kjoorer BliFodt metode
         BliFodt();
@@ -73,6 +74,7 @@ public class Humanoid
         FormUtholdenhetMental = formUtholdenhetMental;
         Sosialt = sosialt; 
         Attractiveness = attractiveness;
+        Id = id;
 
     }
 
