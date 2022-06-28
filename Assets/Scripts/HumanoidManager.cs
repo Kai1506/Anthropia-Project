@@ -17,9 +17,13 @@ public class HumanoidManager : MonoBehaviour
     private float xMin = -45; 
     private float zMax = 46; 
     private float zMin = -45; 
+    private float yLevel = 3; 
 
     //Other Variables
-    private int numberInGenerationOne = 3; 
+    private int numberInGenerationOne = 0; 
+    private bool createNewHumanoid;
+    private int indexForParent1 ;
+    private int indexForParent2;
 
     // Start is called before the first frame update
     void Start()
@@ -35,8 +39,11 @@ public class HumanoidManager : MonoBehaviour
     void Update()
     {
         //lager ny humanoid basert på prokreasjon mellom foreldre
-
-
+        if(createNewHumanoid == true)
+        {
+            InstantiateChildHumanoid(masterListGameObjects[indexForParent1], masterListGameObjects[indexForParent2]);
+            createNewHumanoid = false; 
+        }
     }
 
 
@@ -44,13 +51,13 @@ public class HumanoidManager : MonoBehaviour
     //Metode for å skape de første humanoidene i starten av simulasjonen
     private void InstantiateFirstGenerationHumanoid()
     {
-        Vector3 newPosition = new Vector3(Random.Range(xMin, xMax), 3, Random.Range(zMin, zMax));
+        Vector3 newPosition = new Vector3(Random.Range(xMin, xMax), yLevel, Random.Range(zMin, zMax));
         Quaternion newRotation = new Quaternion(1, 0, 0, 0);
 
         GameObject newHumanoid = Instantiate(HumanoidPrefab, newPosition, newRotation);
         Core coreScript = newHumanoid.GetComponent<Core>();
 
-        coreScript.HumanoidInfo = new Humanoid(RandomAttribute(), RandomAttribute(), RandomAttribute(), RandomAttribute(), RandomAttribute(), RandomAttribute(), RandomAttribute(), RandomAttribute());
+        coreScript.HumanoidInfo = new Humanoid(RandomAttribute(), RandomAttribute(), RandomAttribute(), RandomAttribute(), RandomAttribute(), RandomAttribute(), RandomAttribute(), RandomAttribute(), masterListGameObjects.Count);
         coreScript.SetBeenBorn(true);
 
         masterListGameObjects.Add(newHumanoid);
@@ -63,20 +70,6 @@ public class HumanoidManager : MonoBehaviour
         GameObject newHumanoid = Instantiate(HumanoidPrefab, parent1.transform);
         Core coreScript = newHumanoid.GetComponent<Core>();
 
-        int indexForParent1 = 0; 
-        int indexForParent2 = 0;
-        for (int i = 0; i < masterListGameObjects.Count; i++)
-        {
-            if(masterListGameObjects[i]== parent1)
-            {
-                indexForParent1 = i; 
-            }
-            if(masterListGameObjects[i]== parent2)
-            {
-                indexForParent2 = i; 
-            }
-        }
-
         coreScript.HumanoidInfo = new Humanoid(MakeNewQualityBasedOnParents(masterListObjects[indexForParent1].Hurtighet, masterListObjects[indexForParent2].Hurtighet),
             MakeNewQualityBasedOnParents(masterListObjects[indexForParent1].IntelligensHurtighet, masterListObjects[indexForParent2].IntelligensHurtighet),
             MakeNewQualityBasedOnParents(masterListObjects[indexForParent1].IntelligensGunstighet, masterListObjects[indexForParent2].IntelligensGunstighet),
@@ -84,7 +77,7 @@ public class HumanoidManager : MonoBehaviour
             MakeNewQualityBasedOnParents(masterListObjects[indexForParent1].FormUtholdenhetFysisk, masterListObjects[indexForParent2].FormUtholdenhetFysisk),
             MakeNewQualityBasedOnParents(masterListObjects[indexForParent1].FormUtholdenhetMental, masterListObjects[indexForParent2].FormUtholdenhetMental),
             MakeNewQualityBasedOnParents(masterListObjects[indexForParent1].Sosialt, masterListObjects[indexForParent2].Sosialt),
-            MakeNewQualityBasedOnParents(masterListObjects[indexForParent1].Attractiveness, masterListObjects[indexForParent2].Attractiveness));
+            MakeNewQualityBasedOnParents(masterListObjects[indexForParent1].Attractiveness, masterListObjects[indexForParent2].Attractiveness), masterListGameObjects.Count);
         coreScript.SetBeenBorn(true);
 
         masterListGameObjects.Add(newHumanoid);
@@ -112,7 +105,6 @@ public class HumanoidManager : MonoBehaviour
     }
 
     //Metode for å velge egenskapene til en child basert på egenskapene til foreldrene
-
     private int MakeNewQualityBasedOnParents(int qualityParent1, int qualityParent2)
     {
 
@@ -129,5 +121,13 @@ public class HumanoidManager : MonoBehaviour
         }
 
         return newQuality;
+    }
+
+    //Setters for parent indexene
+    public void CommenceProcreation(int parentIndex1, int parentIndex2)
+    {
+        indexForParent1 = parentIndex1; 
+        indexForParent2 = parentIndex2;
+        createNewHumanoid = true; 
     }
 }

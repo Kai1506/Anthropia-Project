@@ -10,12 +10,27 @@ public class Core : MonoBehaviour
     float timeToDie = 110; 
     float tiredTimer; 
     float tiredCap; 
+    private bool firstTimeSleep = true; 
+    private bool firstTimeAwake = true; 
     float hungryTimer; 
     float hungryCap; 
 
     //The object
     public Humanoid HumanoidInfo; 
     private bool iWasBorn; 
+
+    //Beslutninger
+    private Beslutninger beslutningerClasse; 
+    private Senses sensesClass; 
+
+    void Start()
+    {
+        beslutningerClasse = new Beslutninger();
+
+        //Henter Senses
+        sensesClass = gameObject.GetComponent<Senses>();
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -38,6 +53,12 @@ public class Core : MonoBehaviour
         TimeIsTicking(); 
         HungerRegulator();
         SleepRegulator();
+        /*
+            if(sensesClass.GetIsSleeping == false)
+            {
+                ShouldISleep();               
+            }
+        */
         DeathIsWaiting();
     }
 
@@ -68,7 +89,8 @@ public class Core : MonoBehaviour
     // Gjør at han sakte men sikkert blir mer og mer trøtt, senere legge til muligheten for påfyll
     private void SleepRegulator()
     {
-        if(tiredTimer > tiredCap)
+        // om våken 
+        if(tiredTimer > tiredCap && sensesClass.GetIsSleeping() == false)
         {
             HumanoidInfo.HelseUthviltsverdi -= 10;
 
@@ -77,8 +99,38 @@ public class Core : MonoBehaviour
                 HumanoidInfo.HelseUthviltsverdi = 0; 
             }
         }
+ 
+        //Om sover
+        if(tiredTimer > Mathf.FloorToInt(tiredCap/3) && sensesClass.GetIsSleeping() == true)
+        {
+            HumanoidInfo.HelseUthviltsverdi += 10;
 
-        tiredTimer = 0; 
+            if(HumanoidInfo.HelseUthviltsverdi > 100)
+            {
+                HumanoidInfo.HelseUthviltsverdi = 100;
+                sensesClass.IsSleeping(false);
+            }
+
+            /* WakeUpEvent
+            if(sensesClass.WakeUpEvent == true)
+            {
+                senseClass.IsSleeping(false);
+            }
+            */
+        }
+
+        tiredTimer = 0;
+    }
+
+    public void ShouldISleep()
+    {
+        /*
+        if(sensesClass.IsEating() == false && sensesClass.IsAttacking() == false && sensesClass.IsSocialising() == false && sensesClass.IsProcreating() == false)
+        {
+            sensesClass.IsSleeping(beslutningerClasse.ChoosesToSleep(HumanoidInfo.HelseUthviltsverdi, HumanoidInfo.HelseMetthetsverdi);)
+        }
+        */
+       sensesClass.IsSleeping(false);
     }
 
     //Dreper personen
@@ -95,6 +147,33 @@ public class Core : MonoBehaviour
     {
         iWasBorn = input; 
     }
+
+    public bool GetFirstTimeAwake()
+    {
+        return firstTimeAwake;
+    }
+        public bool GetFirstTimeSleeping()
+    {
+        return firstTimeSleep;
+    }
+
+    public void SetFirstTimeAwake(bool inp)
+    {
+        firstTimeAwake = inp;
+    }
+        public void SetFirstTimeSleeping(bool inp)
+    {
+        firstTimeSleep = inp;
+    }
+
+    //Denne skal gi informasjon til senses om hva den skal lete etter
+    public string GetTargetToSearchAfter()
+    {
+
+        //code more
+        return "";
+    }
+    
 }
 
 
