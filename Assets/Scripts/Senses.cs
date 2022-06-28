@@ -160,5 +160,4 @@ public class Senses : MonoBehaviour
     {
         return damageTaken;
     }
-
 }
