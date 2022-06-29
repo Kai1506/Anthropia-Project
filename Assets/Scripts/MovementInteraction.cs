@@ -165,13 +165,7 @@ public class MovementInteraction : MonoBehaviour
     {
         humanoidAnim.Play("StandStill");
     }
-
-    public void StopEating()
-    {
-
-
-    }
-
+    
     //Go to sleep
     public void Sleep()
     {
