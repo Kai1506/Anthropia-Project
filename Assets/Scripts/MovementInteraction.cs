@@ -109,17 +109,45 @@ public class MovementInteraction : MonoBehaviour
         //Hvis avgjørelsen å sove blir tatt, velger den å sove
 
         /*
-        if(sensesClass.GetIsSleeping() == true && coreClass.GetFirsTimeSleeping() == true)
+        if(sensesClass.GetIsSleeping() == true && coreClass.GetFirstTimeSleeping() == true)
         {
             Sleep();
             coreCore.SetFirsTimeSleeping(false); 
             coreCore.SetFirsTimeAwake(true); 
         }
-        else if (sensesClass.GetIsSleeping() == false && coreCore.GetFirsTimeAwake() == true)
+        else if (sensesClass.GetIsSleeping() == false && coreCore.GetFirstTimeAwake() == true)
         {
             WakeUp();
             coreCore.SetFirsTimeAwake(false); 
             coreCore.SetFirsTimeSleeping(true); 
+        }
+        */
+        /*
+        if(sensesClass.GetIsEating() == true && coreClass.GetFirstTimeEating() == true)
+        {
+            Eat();
+            coreCore.SetFirsTimeEating(false); 
+            coreCore.SetFirsTimeNotEating(true); 
+        }
+        else if (sensesClass.GetIsEating() == false && coreCore.GetFirstTimeNotEating() == true)
+        {
+            StopEating();
+            coreCore.SetFirsTimeNotEating(false); 
+            coreCore.SetFirsTimeEating(true); 
+        }
+        */
+        /*
+        if(sensesClass.GetIsSocializing() == true && coreClass.GetFirstTimeSocialise() == true)
+        {
+            Socialise();
+            coreCore.SetFirsTimeSocialise(false); 
+            coreCore.SetFirsTimeNotSocialise(true); 
+        }
+        else if (sensesClass.GetIsSocializing() == false && coreCore.GetFirstTimeNotSocialise() == true)
+        {
+            StopSocialise();
+            coreCore.SetFirsTimeNotSocialise(false); 
+            coreCore.SetFirsTimeSocialise(true); 
         }
         */
     }
@@ -136,6 +164,12 @@ public class MovementInteraction : MonoBehaviour
     public void StopEating()
     {
         humanoidAnim.Play("StandStill");
+    }
+
+    public void StopEating()
+    {
+
+
     }
 
     //Go to sleep
@@ -220,5 +254,15 @@ public class MovementInteraction : MonoBehaviour
     public void StopSocializing()
     {
         humanoidAnim.Play("StandStill");
+    }
+
+    public void Socialise()
+    {
+
+    }
+
+    public void StopSocialise()
+    {
+
     }
 }
