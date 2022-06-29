@@ -169,7 +169,7 @@ public class Core : MonoBehaviour
         /*
             if(something == true && sensesClass.GetIsSoializing == false)
             {
-                sensesClass.IsSocializinf(true);
+                sensesClass.IsSocializing(true);
             }
         */
 
@@ -177,7 +177,7 @@ public class Core : MonoBehaviour
         /*
             if(something == true && sensesClass.GetIsSoializing == true)
             {
-                sensesClass.IsSocializinf(false);
+                sensesClass.IsSocializing(false);
             }
 
         */

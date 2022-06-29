@@ -117,7 +117,7 @@ public class MovementInteraction : MonoBehaviour
         }
         else if (sensesClass.GetIsSleeping() == false && coreCore.GetFirstTimeAwake() == true)
         {
-            WakeUp();
+            StopSleeping();
             coreCore.SetFirsTimeAwake(false); 
             coreCore.SetFirsTimeSleeping(true); 
         }
@@ -139,13 +139,13 @@ public class MovementInteraction : MonoBehaviour
         /*
         if(sensesClass.GetIsSocializing() == true && coreClass.GetFirstTimeSocialise() == true)
         {
-            Socialise();
+            Socialize();
             coreCore.SetFirsTimeSocialise(false); 
             coreCore.SetFirsTimeNotSocialise(true); 
         }
         else if (sensesClass.GetIsSocializing() == false && coreCore.GetFirstTimeNotSocialise() == true)
         {
-            StopSocialise();
+            StopSocializing();
             coreCore.SetFirsTimeNotSocialise(false); 
             coreCore.SetFirsTimeSocialise(true); 
         }
@@ -248,15 +248,5 @@ public class MovementInteraction : MonoBehaviour
     public void StopSocializing()
     {
         humanoidAnim.Play("StandStill");
-    }
-
-    public void Socialise()
-    {
-
-    }
-
-    public void StopSocialise()
-    {
-
     }
 }
