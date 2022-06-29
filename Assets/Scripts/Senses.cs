@@ -160,4 +160,10 @@ public class Senses : MonoBehaviour
     {
         return damageTaken;
     }
+
+    //Metode for WakeUpEvent. Denne metoden skal returnere true dersom noe vekker humanoiden mens den sover
+    public bool WakeUpEvent()
+    {
+        return false; 
+    }
 }

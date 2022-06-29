@@ -11,9 +11,11 @@ public class Core : MonoBehaviour
     float tiredTimer; 
     float tiredCap; 
     private bool firstTimeSleep = true; 
-    private bool firstTimeAwake = true; 
+    private bool firstTimeAwake = false; 
     float hungryTimer; 
     float hungryCap; 
+    private bool firstTimeEating = true;
+    private bool firstTimeNotEating = false; 
 
     //The object
     public Humanoid HumanoidInfo; 
@@ -73,13 +75,24 @@ public class Core : MonoBehaviour
     //Gjør at han sakte men sikkert blir mer og mer sulten, senere legge til muligheten for påfyll
     private void HungerRegulator()
     {
-        if(hungryTimer > hungryCap)
+        if(hungryTimer > hungryCap && sensesClass.GetIsEating() == false)
         {
             HumanoidInfo.HelseMetthetsverdi -= 10;
 
             if(HumanoidInfo.HelseMetthetsverdi < 0)
             {
                 HumanoidInfo.HelseMetthetsverdi = 0; 
+            }
+        }
+
+        if(hungryTimer > Mathf.FloorToInt(hungryCap/5) && sensesClass.GetIsEating() == false)
+        {
+            HumanoidInfo.HelseMetthetsverdi += 20; 
+
+            if(HumanoidInfo.HelseMetthetsverdi > 100)
+            {
+                HumanoidInfo.HelseMetthetsverdi = 100; 
+                sensesClass.IsEating(false);
             }
         }
 
@@ -111,12 +124,11 @@ public class Core : MonoBehaviour
                 sensesClass.IsSleeping(false);
             }
 
-            /* WakeUpEvent
-            if(sensesClass.WakeUpEvent == true)
+            // WakeUpEvent
+            if(sensesClass.WakeUpEvent() == true)
             {
-                senseClass.IsSleeping(false);
+                sensesClass.IsSleeping(false);
             }
-            */
         }
 
         tiredTimer = 0;
@@ -125,13 +137,32 @@ public class Core : MonoBehaviour
     public void ShouldISleep()
     {
         /*
-        if(sensesClass.IsEating() == false && sensesClass.IsAttacking() == false && sensesClass.IsSocialising() == false && sensesClass.IsProcreating() == false)
+        if(sensesClass.GetIsEating() == false && sensesClass.GetIsAttacking() == false && sensesClass.GetIsSocialising() == false && sensesClass.GetIsProcreating() == false)
         {
             sensesClass.IsSleeping(beslutningerClasse.ChoosesToSleep(HumanoidInfo.HelseUthviltsverdi, HumanoidInfo.HelseMetthetsverdi);)
         }
         */
        sensesClass.IsSleeping(false);
     }
+
+
+    //Metoder tilknyttet spising
+
+    public void ShouldIEat()
+    {
+        /*
+        if(sensesClass.GetIsSleeping() == false && sensesClass.GetIsAttacking() == false && sensesClass.GetIsProcreating() == false && sensesClass.GetIsSleeping() == false)
+        {
+            sensesClass.IsEating(beslutningerClasse.VelgerHumanoidSpise(HumanoidInfo.HelseMetthetsverdi, HumanoidInfo.HelseSykdom));
+        }
+        */
+        sensesClass.IsEating(false);
+
+    }
+
+    //Her er det plass til eventuell metoder for å begynn og avslutte spising 
+
+
 
     //Dreper personen
     private void DeathIsWaiting()
@@ -166,6 +197,23 @@ public class Core : MonoBehaviour
         firstTimeSleep = inp;
     }
 
+        public bool GetFirstTimeEating()
+    {
+        return firstTimeEating;
+    }
+        public bool GetFirstTimeNotEating()
+    {
+        return firstTimeNotEating;
+    }
+
+    public void SetFirstTimeEating(bool inp)
+    {
+        firstTimeEating = inp;
+    }
+        public void SetFirstTimeNotEating(bool inp)
+    {
+        firstTimeNotEating = inp;
+    }
     //Denne skal gi informasjon til senses om hva den skal lete etter
     public string GetTargetToSearchAfter()
     {

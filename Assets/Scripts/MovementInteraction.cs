@@ -122,12 +122,33 @@ public class MovementInteraction : MonoBehaviour
             coreCore.SetFirsTimeSleeping(true); 
         }
         */
+
+                /*
+        if(sensesClass.GetIsEating() == true && coreClass.GetFirsTimeEating() == true)
+        {
+            Eat();
+            coreCore.SetFirsTimeEating(false); 
+            coreCore.SetFirsTimeNotEating(true); 
+        }
+        else if (sensesClass.GetIsEating() == false && coreCore.GetFirsTimeNotEating() == true)
+        {
+            StopEating();
+            coreCore.SetFirsTimeNotEating(false); 
+            coreCore.SetFirsTimeEating(true); 
+        }
+        */
     }
 
     //Eat Food
     public void Eat()
     {
 
+    }
+
+    public void StopEating()
+    {
+
+        
     }
 
     //Go to sleep
