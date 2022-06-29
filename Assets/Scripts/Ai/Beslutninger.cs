@@ -112,22 +112,24 @@ public class Beslutninger
     }
 
     //Returnerer en bool som sier om denne personen har lyst til aa sosialisere eller ikke med en annen person
-    public bool ChoosesToSocialise(int sosialt)
+    public bool ChoosesToSocialise(int sosialt, bool seenSomeone)
     {
-        int randint = Random.Range(0, 101);
+        if(seenSomeone == true)
+        {
+            int randint = Random.Range(0, 101);
 
-        if(sosialt > 70)
-        {
-            return true; 
-        }
-        else if(sosialt > 40)
-        {
-            if(randint > 50)
+            if(sosialt > 70)
             {
-                return true;
+                return true; 
+            }
+            else if(sosialt > 40)
+            {
+                if(randint > 50)
+                {
+                    return true;
+                }
             }
         }
-
         return false;
     }
 
