@@ -112,8 +112,22 @@ public class Senses : MonoBehaviour
     //Hearing radius
     public bool GetOnTriggerEnter(Collider sound)
     {
+        //Gets collider
+        SphereCollider hearingCollider = transform.GetComponent<SphereCollider>();
+
+        //If sleeping shrink radius
+        if (sleeping == true)
+        {
+            hearingCollider.radius = 3f; 
+        }
+        //If awake, normal radius
+        else
+        {
+            hearingCollider.radius = 15f;  //Change to 20 after testing
+        }
+
         //Hearing
-        if(sound.tag == "Animal" || sound.tag == "Humanoid")
+        if (sound.tag == "Animal" || sound.tag == "Humanoid")
         {
             return true;
         }

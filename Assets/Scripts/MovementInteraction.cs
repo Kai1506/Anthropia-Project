@@ -10,7 +10,7 @@ public class MovementInteraction : MonoBehaviour
     //Variables
     private bool move = true;
 
-    private int moveSpeed = 2;
+    private int moveSpeed = 3;
 
     private Vector3 targetCoordinate;
 
@@ -24,7 +24,7 @@ public class MovementInteraction : MonoBehaviour
 
     private Quaternion direction;
     
-    private Animator walkingAnim;
+    private Animator humanoidAnim;
 
     private float nyPositionTimer;
 
@@ -41,7 +41,7 @@ public class MovementInteraction : MonoBehaviour
     void Start()
     {
         //Walking animation
-        walkingAnim = gameObject.GetComponent<Animator>();
+        humanoidAnim = gameObject.GetComponent<Animator>();
 
         //Start koordinat
         randomCoordinate = new Vector3(Random.Range(-45,46), 3, Random.Range(-45,46));
@@ -66,7 +66,7 @@ public class MovementInteraction : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            WakeUp();
+            StopSleeping();
         }
 
         //Walk towards something
@@ -91,12 +91,12 @@ public class MovementInteraction : MonoBehaviour
         //Walking Animation (yes or no)
         if (move == true && walkAnim == false)
         {
-            walkingAnim.Play("WalkAnimStart");
+            humanoidAnim.Play("WalkAnimStart");
             walkAnim = true;
         }
         else if (move == false)
         {
-            walkingAnim.Play("StandStill");
+            humanoidAnim.Play("StandStill");
             walkAnim = false;
         }
 
@@ -127,13 +127,21 @@ public class MovementInteraction : MonoBehaviour
     //Eat Food
     public void Eat()
     {
+        //Stop
+        move = false;
 
+        humanoidAnim.Play("EatingAnim");
+    }
+
+    public void StopEating()
+    {
+        humanoidAnim.Play("StandStill");
     }
 
     //Go to sleep
     public void Sleep()
     {
-        //stop
+        //Stop
         move = false;
 
         //Lie down 
@@ -141,18 +149,15 @@ public class MovementInteraction : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y-1, transform.position.z);
     }
 
-    //Wake up
-    public void WakeUp()
+    public void StopSleeping()
     {
         //Stand up
         transform.Rotate(90.0f, 0.0f, -90.0f, Space.Self);
         transform.position = new Vector3(transform.position.x, transform.position.y-1, transform.position.z);
-        
-
     }
 
     //Recieves a target to approach, with speed 1-5
-    public void MoveTowards(bool move_, int moveSpeed_, Vector3 targetCoordinate_)
+    public void MoveTowardsTarget(bool move_, int moveSpeed_, Vector3 targetCoordinate_)
     {
         move = move_;
 
@@ -161,6 +166,11 @@ public class MovementInteraction : MonoBehaviour
         targetCoordinate = targetCoordinate_;
 
         idle = false;
+    }
+
+    public void StopMovingTowardsTarget()
+    {
+        humanoidAnim.Play("StandStill");
     }   
 
     //Look arounds
@@ -172,12 +182,43 @@ public class MovementInteraction : MonoBehaviour
     //Attack target
     public void AttackTarget()
     {
+        //Stop
+        move = false;
 
+        humanoidAnim.Play("AttackAnim");
+    }
+
+    public void StopAttackingTarget()
+    {
+        humanoidAnim.Play("StandStill");
     }
 
     //Get away from target
-    public void EscapeTarget()
+    public void EscapeTarget(bool move_, int moveSpeed_, Vector3 targetCoordinate_)
     {
+        move = move_;
 
+        moveSpeed = moveSpeed_;
+
+        targetCoordinate = -targetCoordinate_;
+    }
+
+    public void StopEscapingTarget()
+    {
+        humanoidAnim.Play("StandStill");
+    }
+
+    //Socialize
+    public void Socialize()
+    {
+        //Stop
+        move = false;
+
+        humanoidAnim.Play("TalkAnim");
+    }
+
+    public void StopSocializing()
+    {
+        humanoidAnim.Play("StandStill");
     }
 }
