@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class Senses : MonoBehaviour
 {
-    //Senere: gjore om vektoren til en funksjon som dekker et omrade foran
-    private Core coreClass;
+    //Senere: gjore om raycast til en funksjon som dekker et omrade foran
 
-    private static LayerMask bear;
+    private int lineOfSight = 100000;
 
-    private static LayerMask obstacle;
+    private RaycastHit something;
 
     private Vector3 eyesightDirection;
 
     private float warningTimer;
-
-    private bool foundTarget;
-
-    private string requestedTarget;
 
     private bool sleeping;
 
@@ -29,17 +24,18 @@ public class Senses : MonoBehaviour
 
     private bool attacking;
 
-    private int damageTaken = 30;
+    //Variables for taking and dealing damage
+    public static int damageTaken;
+
+    public static int damageDealing;
+
+    //Core class
+    private Core coreClass;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Check for raycast target
-        bear = LayerMask.GetMask("Bear");
-        
-        obstacle = LayerMask.GetMask("Obstacle");
-
-        //Finding core
+        //Finds core
         coreClass = gameObject.GetComponent<Core>();
     }
 
@@ -48,19 +44,17 @@ public class Senses : MonoBehaviour
         //Eyesight direction
         eyesightDirection = transform.TransformDirection(Vector3.forward);
 
+        Ray ray = new Ray(transform.position, transform.forward);;
+
         // If raycast has spotted x
-        if (Physics.Raycast(transform.position, eyesightDirection, 100, bear))
+        if (Physics.Raycast(ray, out something, lineOfSight)) 
         {
-            SeesSomething(bear);
-        }
-        if(Physics.Raycast(transform.position, eyesightDirection, 100, obstacle))
-        {
-            SeesSomething(obstacle);
+            ISeeSomething();
         }
     }
 
     //Sleeping
-    public void IsSleeping(bool sleeping_)
+    public void SetIsSleeping(bool sleeping_)
     {
         sleeping = sleeping_;
     }
@@ -70,7 +64,7 @@ public class Senses : MonoBehaviour
     }
 
     //Eating
-    public void IsEating(bool eating_)
+    public void SetIsEating(bool eating_)
     {
         eating = eating_;
     }
@@ -80,7 +74,7 @@ public class Senses : MonoBehaviour
     }
 
     //Socializing
-    public void IsSocializing(bool socializing_)
+    public void SetIsSocializing(bool socializing_)
     {
         socializing = socializing_;
     }
@@ -90,7 +84,7 @@ public class Senses : MonoBehaviour
     }
 
     //Procreating
-    public void IsProcreating(bool procreating_)
+    public void SetIsProcreating(bool procreating_)
     {
         procreating = procreating_;
     }
@@ -100,7 +94,7 @@ public class Senses : MonoBehaviour
     }
 
     //Attacking
-    public void IsAttacking(bool attacking_)
+    public void SetIsAttacking(bool attacking_)
     {
         attacking = attacking_;
     }
@@ -138,39 +132,15 @@ public class Senses : MonoBehaviour
     }
 
     //Sees something and determines what it is
-    public string SeesSomething(LayerMask something)
+    public void ISeeSomething()
     {
-        //Sees bear
-        return something.ToString();
+        //Sees something and alerts core
+        coreClass.ObjectDetected(something.transform.gameObject.layer.ToString());
         
-        /*if (something == bear)
-        {
-            //Tell brain to calculate bear-scenario
-            return something.ToString();
-        }
-
-        //Sees obstacle
-        else if (something == obstacle)
-        {
-            //Tell brain to calculate obstacle-scenario
-            
-        }
-
-        if (something.ToString() == requestedTarget)
-        {
-            //Tell brain that target is spotted
-            return true; 
-        }*/
     }
 
-    //Find target requested by core
-    public void SearchAfterTarget(string target)
-    {
-        requestedTarget = target;
-    }
-
-    //Has taken damage, tells brain how much
-    public int GetDamageTakejn()
+    //Has taken damage, tells core amount taken
+    public int GetDamageTaken()
     {
         return damageTaken;
     }

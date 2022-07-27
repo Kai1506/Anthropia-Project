@@ -93,10 +93,10 @@ public class Core : MonoBehaviour
         
         if(sensesClass.GetIsEating() == false && sensesClass.GetIsAttacking() == false && sensesClass.GetIsSleeping() == false && sensesClass.GetIsProcreating() == false)
         {
-            sensesClass.IsSocializing(beslutningerClasse.ChoosesToSocialise(HumanoidInfo.Sosialt, seenSomeone));
+            sensesClass.SetIsSocializing(beslutningerClasse.ChoosesToSocialise(HumanoidInfo.Sosialt, seenSomeone));
         }
         
-       sensesClass.IsSocializing(false);
+       sensesClass.SetIsSocializing(false);
     }
 
 
@@ -120,7 +120,7 @@ public class Core : MonoBehaviour
             if(HumanoidInfo.HelseMetthetsverdi > 100)
             {
                 HumanoidInfo.HelseMetthetsverdi = 100; 
-                sensesClass.IsEating(false);
+                sensesClass.SetIsEating(false);
             }
         }
 
@@ -149,13 +149,13 @@ public class Core : MonoBehaviour
             if(HumanoidInfo.HelseUthviltsverdi > 100)
             {
                 HumanoidInfo.HelseUthviltsverdi = 100;
-                sensesClass.IsSleeping(false);
+                sensesClass.SetIsSleeping(false);
             }
 
             // WakeUpEvent
             if(sensesClass.WakeUpEvent() == true)
             {
-                sensesClass.IsSleeping(false);
+                sensesClass.SetIsSleeping(false);
             }
         }
 
@@ -192,7 +192,7 @@ public class Core : MonoBehaviour
             sensesClass.IsSleeping(beslutningerClasse.ChoosesToSleep(HumanoidInfo.HelseUthviltsverdi, HumanoidInfo.HelseMetthetsverdi));
         }
         */
-       sensesClass.IsSleeping(false);
+       sensesClass.SetIsSleeping(false);
     }
 
     //Metoder tilknyttet spising
@@ -204,7 +204,7 @@ public class Core : MonoBehaviour
             sensesClass.IsEating(beslutningerClasse.VelgerHumanoidSpise(HumanoidInfo.HelseMetthetsverdi, HumanoidInfo.HelseSykdom));
         }
         */
-        sensesClass.IsEating(false);
+        sensesClass.SetIsEating(false);
 
     }
 
@@ -278,12 +278,36 @@ public class Core : MonoBehaviour
     }
    
     //Denne skal gi informasjon til senses om hva den skal lete etter
-    public string GetTargetToSearchAfter()
+    public string SetTargetToSearchAfter()
     {
 
         //code more
+
+        //Kai: jeg tenker hjernen ikke trenger å sende "target" likevel. Den vet det selv, den trenger bare å vente på at "senses" ser noe, og den tingen har samme identifikasjon som "target"
+        //noe lignende: if (something == target){} i en metode som heter f.eks ObjectDetected
+
         return "";
+
+        //    |
+        //    v
+    }   
+
+    public void ObjectDetected(string something)
+    {       
+        /*if  (something == target)
+        {
+            Ta valg avhengig av at den har funnet target
+        }
+        else if (something == "bear")
+        {
+            Ta valg avhengig av at den funnet noe av betydning
+        }
+        else if (something == "obstacle")
+        {
+            Ta valg avhengig av at den funnet noe av betydning
+        }*/
     }
+
     
 }
 

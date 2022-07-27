@@ -14,15 +14,13 @@ public class MovementInteraction : MonoBehaviour
 
     private Vector3 targetCoordinate;
 
+    private Quaternion direction;
+
     private bool walkAnim = false;
 
     private static bool searchForTarget = false;
 
     private int turnTime = 100;
-
-    private Vector3 randomCoordinate;
-
-    private Quaternion direction;
     
     private Animator humanoidAnim;
 
@@ -30,8 +28,7 @@ public class MovementInteraction : MonoBehaviour
 
     private float analyseTimer;
 
-    //core and sense class
-
+    //Core and Senses class
     Core coreClass; 
 
     Senses sensesClass; 
@@ -43,8 +40,8 @@ public class MovementInteraction : MonoBehaviour
         //Walking animation
         humanoidAnim = gameObject.GetComponent<Animator>();
 
-        //Start koordinat
-        randomCoordinate = new Vector3(Random.Range(-45,46), 3, Random.Range(-45,46));
+        //Start koordinat og rotasjon
+        targetCoordinate = new Vector3(Random.Range(-45,46), 3, Random.Range(-45,46));
 
         //Finner Core og Senses
         coreClass = gameObject.GetComponent<Core>();
@@ -173,15 +170,17 @@ public class MovementInteraction : MonoBehaviour
         move = false;
 
         //Lie down 
-        transform.Rotate(-90.0f, 0.0f, 90.0f, Space.Self);
+        transform.Rotate(-90.0f, 0.0f, 0.0f, Space.Self);
         transform.position = new Vector3(transform.position.x, transform.position.y-1, transform.position.z);
     }
 
     public void StopSleeping()
     {
         //Stand up
-        transform.Rotate(90.0f, 0.0f, -90.0f, Space.Self);
-        transform.position = new Vector3(transform.position.x, transform.position.y-1, transform.position.z);
+        move = true;
+        
+        transform.Rotate(90.0f, 0.0f, 0.0f, Space.Self);
+        transform.position = new Vector3(transform.position.x, transform.position.y+1, transform.position.z);
     }
 
     //Recieves a target to approach, with speed 1-5
@@ -201,6 +200,21 @@ public class MovementInteraction : MonoBehaviour
         humanoidAnim.Play("StandStill");
     }   
 
+    //Get away from target
+    public void EscapeTarget(bool move_, int moveSpeed_, Vector3 targetCoordinate_)
+    {
+        move = move_;
+
+        moveSpeed = moveSpeed_;
+
+        targetCoordinate = -targetCoordinate_;
+    }
+
+    public void StopEscapingTarget()
+    {
+        humanoidAnim.Play("StandStill");
+    }
+
     //Look arounds
     public void AnalyzeSurroundings(bool searchForTarget_)
     {
@@ -217,21 +231,6 @@ public class MovementInteraction : MonoBehaviour
     }
 
     public void StopAttackingTarget()
-    {
-        humanoidAnim.Play("StandStill");
-    }
-
-    //Get away from target
-    public void EscapeTarget(bool move_, int moveSpeed_, Vector3 targetCoordinate_)
-    {
-        move = move_;
-
-        moveSpeed = moveSpeed_;
-
-        targetCoordinate = -targetCoordinate_;
-    }
-
-    public void StopEscapingTarget()
     {
         humanoidAnim.Play("StandStill");
     }
